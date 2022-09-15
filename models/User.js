@@ -1,13 +1,20 @@
 const mongoose = require('mongoose')
 
 const UsersSchmea = new mongoose.Schema({
-    firstName: {
+    name: {
         type: String, 
         required: false
     },
-    lastName: {
+    email: {
         type: String, 
         required: false
+    }, 
+    age: {
+        type: Number,
+    },
+    date: {
+        type: Date,
+        default: Date.now,
     }
 })
 

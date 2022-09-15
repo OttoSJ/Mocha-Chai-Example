@@ -18,7 +18,10 @@ const users = require('./routes/Users_route')
 const app = express()
 
 app.use(cors())
+
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
+
 
 // Mount routes
 app.use('/api/v1/users', users)
