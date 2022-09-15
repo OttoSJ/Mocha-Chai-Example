@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5000
 connectDB()
 
 // Route files
-const users = require('./routes/Users_route')
+const users = require('./routes/users_route')
 
 const app = express()
 
