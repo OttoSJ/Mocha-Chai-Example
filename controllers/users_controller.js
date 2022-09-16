@@ -13,8 +13,8 @@ exports.getAllUsers = async (req, res) => {
 
 exports.getUser = async (req, res) => {
   try {
-    const users = await Users.findOne({ _id: req.params.userId })
-    res.status(200).json({ success: true, data: users })
+    const user = await Users.findOne({ _id: req.params.userId })
+    res.status(200).json({ success: true, data: user })
   } catch (error) {
     res.status(400).json({ success: false, error: error })
   }

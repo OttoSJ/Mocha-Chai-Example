@@ -2,24 +2,24 @@ const expect = require('chai').expect
 let chai = require('chai')
 const should = chai.should()
 const axios = require('axios')
-const { API_URL } = require('./test_utils')
+const { API_URL, createUser } = require('./test_utils')
 
 describe('Check If User Was Created', () => {
-  let response
+  before(async () => {
+    user = await createUser()
+  })
 
   it('Create user', async () => {
-    const user = {
-      name: 'Test Person',
-      email: 'testperson@gmail.com',
-      age: 33,
-    }
-    response = await axios.post(API_URL + 'users/register', user)
-
-    expect(response.data.data.name).to.be.equal('Test Person')
+    expect(user.data.name).to.be.equal('Somebody Else')
+    expect(user.data.email).to.be.equal('somebodyelse@gmail.com')
+    expect(user.data.age).to.be.equal(25)
+    user.data.should.have.property('name')
+    user.data.should.have.property('email')
+    user.data.should.have.property('age')
   })
 
   after((done) => {
-    axios.delete(API_URL + `users/${response.data.data._id}`)
+    axios.delete(API_URL + `users/${user.data._id}`)
     done()
   })
 })

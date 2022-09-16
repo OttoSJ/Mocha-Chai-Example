@@ -2,40 +2,31 @@ const expect = require('chai').expect
 let chai = require('chai')
 const should = chai.should()
 const axios = require('axios')
-const { API_URL } = require('./test_utils')
+const { API_URL, createUser } = require('./test_utils')
 
 describe('Check If User Was Updated', () => {
-  let response
+  before(async () => {
+    user = await createUser()
+  })
   it('Updates user', async () => {
-    const userId = await axios.get(API_URL + 'users')
-
     const userPayload = {
-      name: 'Updated Test Person',
-      email: 'updatetestperson@gmail.com',
-      age: 200,
+      name: 'Test Person',
+      email: 'testperson@gmail.com',
+      age: 20,
     }
 
-    response = await axios.put(
-      API_URL + `users/updateuser/${userId.data.data[0]._id}`,
+    const response = await axios.put(
+      API_URL + `users/updateuser/${user.data._id}`,
       userPayload
     )
 
-    expect(response.data.data.name).to.be.equal('Updated Test Person')
-
-    console.log('Name changed to ===> ', response.data.data.name)
+    expect(response.data).to.be.an('object')
+    expect(response.status).to.be.equal(200)
+    expect(response.data.data.name).to.be.equal('Test Person')
   })
 
   after((done) => {
-    const userPayload = {
-      name: 'Test Person',
-      email: 'updatetestperson@gmail.com',
-      age: 200,
-    }
-
-    axios.put(
-      API_URL + `users/updateuser/${response.data.data._id}`,
-      userPayload
-    )
+    axios.delete(API_URL + `users/${user.data._id}`)
     done()
   })
 })
