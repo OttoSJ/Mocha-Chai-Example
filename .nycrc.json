@@ -1,0 +1,10 @@
+{
+  "include": "src",
+  "exclude": "someOtherDir",
+  "check-coverage": true,
+  "lines": 50,
+  "branches": 50,
+  "functions": 60,
+  "statements": 60,
+  "report-dir": "./nyc_reports"
+}
